@@ -2,7 +2,7 @@
 name = "auto-agent-transcript-cost-waste-analyzer"
 version = "0.1.0"
 description = "CLI that parses local Claude Code / Codex session JSONL transcripts and reports token spend per tool, repeated file re-reads, oversized tool outputs and cache misses, with concrete suggestions. For heavy agent users who don't know where their tokens go."
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { text = "MIT" }
 dependencies = []
 classifiers = [
