@@ -62,7 +62,8 @@ def parse_claude_session(path: str | Path) -> Session:
     turns_by_msg: dict[str, Turn] = {}
     turn_by_tool: dict[str, Turn] = {}
 
-    for entry in JSONLReader(path).read():
+    reader = JSONLReader(path)
+    for entry in reader.read():
         if not isinstance(entry, dict):
             continue
         if entry.get("sessionId"):
@@ -114,4 +115,5 @@ def parse_claude_session(path: str | Path) -> Session:
                             is_error=bool(block.get("is_error")),
                         )
                     )
+    session.malformed_lines = len(reader.warnings)
     return session

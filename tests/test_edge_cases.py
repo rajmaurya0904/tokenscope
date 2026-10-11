@@ -91,3 +91,21 @@ def test_transcript_without_usage_reports_zero(tmp_path: Path) -> None:
     report = build_report([parse_claude_session(f)])
     assert report.cost == 0.0
     assert report.cache_hit_ratio == 0.0
+
+
+def test_malformed_lines_are_counted(tmp_path: Path) -> None:
+    f = _write(
+        tmp_path / "s.jsonl",
+        [_assistant("m1", [], {"input_tokens": 1}), "{not json", "also broken}"],
+    )
+    session = parse_claude_session(f)
+    assert session.malformed_lines == 2
+    assert len(session.turns) == 1
+
+
+def test_truncated_final_line_counts_as_malformed(tmp_path: Path) -> None:
+    f = tmp_path / "s.jsonl"
+    f.write_text(_assistant("m1", [], {"input_tokens": 1}) + '\n{"type": "assi', encoding="utf-8")
+    session = parse_claude_session(f)
+    assert session.malformed_lines == 1
+    assert len(session.turns) == 1

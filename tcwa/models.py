@@ -76,6 +76,7 @@ class Session:
     provider: str
     turns: list[Turn] = field(default_factory=list)
     path: str | None = None
+    malformed_lines: int = 0
 
     @property
     def usage(self) -> Usage:
