@@ -2,10 +2,18 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 
 from tcwa.analyzers.tool_spend import Tokenizer, estimate_tokens
 from tcwa.models import Session, ToolCall
+
+# Markers the agent harness leaves in a result when it cut the output short.
+_TRUNCATION_MARKERS = (
+    re.compile(r"\[[^\]\n]*truncated[^\]\n]*\]", re.IGNORECASE),
+    re.compile(r"<persisted-output>", re.IGNORECASE),
+    re.compile(r"output too large", re.IGNORECASE),
+)
 
 
 @dataclass
@@ -17,6 +25,11 @@ class OversizedResult:
     estimated_tokens: int
     is_truncated: bool = False
     has_no_limit: bool = False
+
+
+def _looks_truncated(content: str) -> bool:
+    """Return True if a tool result carries a harness truncation marker."""
+    return any(marker.search(content) for marker in _TRUNCATION_MARKERS)
 
 
 def _get_command_for_tool(call: ToolCall) -> str:
@@ -82,6 +95,7 @@ def analyze_oversized(
                     tool=call.name,
                     command=cmd,
                     estimated_tokens=tokens,
+                    is_truncated=_looks_truncated(result.content),
                     has_no_limit=has_no_limit,
                 )
                 results.append(oversized)
