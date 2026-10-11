@@ -95,6 +95,18 @@ def test_render_json_contains_all_sections() -> None:
         assert key in data, f"Missing key: {key}"
 
 
+def test_render_markdown_empty_sections_state_their_criteria() -> None:
+    report = build_report(_fixture_sessions(), oversized_threshold=900_000)
+    rendered = render_markdown(report)
+    assert "*(none above 900,000 tokens -- raise with --threshold)*" in rendered
+    assert "| (none) |" not in rendered
+
+
+def test_render_json_reports_threshold_used() -> None:
+    report = build_report(_fixture_sessions(), oversized_threshold=1234)
+    assert json.loads(render_json(report))["oversized_threshold"] == 1234
+
+
 def test_render_markdown_matches_golden_file() -> None:
     report = build_report(_fixture_sessions())
     rendered = render_markdown(report, top_n=10)

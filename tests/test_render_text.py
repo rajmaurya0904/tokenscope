@@ -71,6 +71,20 @@ def test_render_text_respects_top_n() -> None:
     assert "npm test" not in rendered
 
 
+def test_render_text_empty_oversized_states_threshold() -> None:
+    report = build_report(_fixture_sessions(), oversized_threshold=900_000)
+    rendered = render_text(report, color=False)
+    assert "(none above 900,000 tokens -- raise with --threshold)" in rendered
+    assert "  (none)" not in rendered
+
+
+def test_render_text_empty_rereads_explains_why() -> None:
+    report = build_report([])
+    rendered = render_text(report, color=False)
+    assert "none -- no file was read twice without an edit in between" in rendered
+    assert "(none above 5,000 tokens -- raise with --threshold)" in rendered
+
+
 def test_render_text_color_only_when_requested() -> None:
     report = build_report(_fixture_sessions())
     assert "\x1b[" not in render_text(report, color=False)

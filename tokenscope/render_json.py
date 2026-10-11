@@ -22,6 +22,7 @@ def render_json(report: Report) -> str:
     - tool_spend: list of per-tool aggregated spend
     - rereads: list of repeatedly read files
     - oversized: list of oversized tool outputs
+    - oversized_threshold: token threshold above which an output was flagged
     - cache_misses: list of cache misses
     - suggestions: list of actionable recommendations
     """
@@ -34,6 +35,7 @@ def render_json(report: Report) -> str:
         "tool_spend": [asdict(t) for t in report.tool_spend],
         "rereads": [asdict(r) for r in report.rereads],
         "oversized": [asdict(o) for o in report.oversized],
+        "oversized_threshold": report.oversized_threshold,
         "cache_misses": [asdict(m) for m in report.cache_misses],
         "suggestions": [asdict(s) for s in report.suggestions],
     }

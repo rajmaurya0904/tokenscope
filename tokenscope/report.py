@@ -18,6 +18,8 @@ from tokenscope.models import Session, Usage
 from tokenscope.pricing import ModelPricing, price_usage
 from tokenscope.suggestions import Suggestion, generate_suggestions
 
+DEFAULT_OVERSIZED_THRESHOLD = 5000
+
 
 @dataclass
 class Report:
@@ -32,6 +34,7 @@ class Report:
     cache_misses: list[CacheMiss] = field(default_factory=list)
     cache_hit_ratio: float = 0.0
     suggestions: list[Suggestion] = field(default_factory=list)
+    oversized_threshold: int = DEFAULT_OVERSIZED_THRESHOLD
 
 
 def _merge_tool_spend(all_spend: list[ToolSpend]) -> list[ToolSpend]:
@@ -57,7 +60,7 @@ def _merge_rereads(all_rereads: list[FileReread]) -> list[FileReread]:
 
 def build_report(
     sessions: list[Session],
-    oversized_threshold: int = 5000,
+    oversized_threshold: int = DEFAULT_OVERSIZED_THRESHOLD,
     cache_min_tokens: int = 1000,
     cache_ttl: timedelta = DEFAULT_TTL,
     tokenizer: Tokenizer = estimate_tokens,
@@ -109,4 +112,5 @@ def build_report(
         cache_misses=sorted_cache_misses,
         cache_hit_ratio=cache_hit_ratio,
         suggestions=suggestions,
+        oversized_threshold=oversized_threshold,
     )

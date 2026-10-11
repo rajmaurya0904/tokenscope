@@ -32,11 +32,18 @@ def _fmt_money(amount: float) -> str:
 
 
 def _table(
-    headers: Sequence[str], rows: Sequence[Sequence[str]], aligns: Sequence[str]
+    headers: Sequence[str],
+    rows: Sequence[Sequence[str]],
+    aligns: Sequence[str],
+    empty_note: str = "none",
 ) -> list[str]:
-    """Render an aligned plain-text table; ``aligns`` is ``"l"``/``"r"`` per column."""
+    """Render an aligned plain-text table; ``aligns`` is ``"l"``/``"r"`` per column.
+
+    When there are no rows, ``empty_note`` is printed instead of the table so the
+    reader learns why the section is empty rather than just that it is.
+    """
     if not rows:
-        return ["  (none)"]
+        return [f"  ({empty_note})"]
     widths = [max(len(h), *(len(row[i]) for row in rows)) for i, h in enumerate(headers)]
 
     def fmt_row(cells: Sequence[str]) -> str:
@@ -94,6 +101,7 @@ def render_text(report: Report, top_n: int = DEFAULT_TOP_N, color: bool | None =
                 for r in report.rereads[:top_n]
             ],
             ["l", "r", "r", "r"],
+            empty_note="none -- no file was read twice without an edit in between",
         )
     )
     lines.append("")
@@ -104,6 +112,10 @@ def render_text(report: Report, top_n: int = DEFAULT_TOP_N, color: bool | None =
             ["TOOL", "COMMAND", "TOKENS"],
             [[o.tool, o.command, _fmt_int(o.estimated_tokens)] for o in report.oversized[:top_n]],
             ["l", "l", "r"],
+            empty_note=(
+                f"none above {_fmt_int(report.oversized_threshold)} tokens"
+                " -- raise with --threshold"
+            ),
         )
     )
     lines.append("")

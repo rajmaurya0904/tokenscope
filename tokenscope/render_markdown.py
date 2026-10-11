@@ -13,10 +13,15 @@ def _fmt_money(amount: float) -> str:
     return f"${amount:,.4f}"
 
 
-def _table_markdown(headers: list[str], rows: list[list[str]]) -> list[str]:
-    """Render a markdown table with headers and rows."""
+def _table_markdown(
+    headers: list[str], rows: list[list[str]], empty_note: str = "none"
+) -> list[str]:
+    """Render a markdown table with headers and rows.
+
+    When there are no rows, ``empty_note`` explains why the section is empty.
+    """
     if not rows:
-        return ["| (none) |"]
+        return [f"*({empty_note})*"]
 
     lines = []
     header_line = "| " + " | ".join(headers) + " |"
@@ -76,6 +81,7 @@ def render_markdown(report: Report, top_n: int = 10) -> str:
                 [r.path, _fmt_int(r.reads), _fmt_int(r.wasted_reads), _fmt_int(r.wasted_tokens)]
                 for r in report.rereads[:top_n]
             ],
+            empty_note="none -- no file was read twice without an edit in between",
         )
     )
     lines.append("")
@@ -85,6 +91,10 @@ def render_markdown(report: Report, top_n: int = 10) -> str:
         _table_markdown(
             ["Tool", "Command", "Tokens"],
             [[o.tool, o.command, _fmt_int(o.estimated_tokens)] for o in report.oversized[:top_n]],
+            empty_note=(
+                f"none above {_fmt_int(report.oversized_threshold)} tokens"
+                " -- raise with --threshold"
+            ),
         )
     )
     lines.append("")
