@@ -87,7 +87,14 @@ def _load_sessions(paths: Sequence[str], since: date | None) -> list[Session]:
 
 
 def _load_overrides(prices: str | None) -> dict[str, ModelPricing] | None:
-    return load_pricing_overrides(prices) if prices else None
+    if not prices:
+        return None
+    if not Path(prices).expanduser().exists():
+        raise _BadInputError(f"pricing file does not exist: {prices}")
+    try:
+        return load_pricing_overrides(prices)
+    except (ValueError, KeyError, TypeError, AttributeError) as exc:
+        raise _BadInputError(f"invalid pricing file {prices}: {exc}") from exc
 
 
 def cmd_analyze(args: argparse.Namespace) -> int:

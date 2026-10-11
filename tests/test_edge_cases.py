@@ -180,6 +180,27 @@ def test_unreadable_file_is_skipped_with_warning(
     assert json.loads(captured.out)["sessions"] == 1
 
 
+def test_missing_prices_file_exits_2(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    f = _write(tmp_path / "s.jsonl", [_assistant("m1", [], {"input_tokens": 1})])
+    code = main(["analyze", str(f), "--prices", str(tmp_path / "nope.json")])
+    captured = capsys.readouterr()
+    assert code == 2
+    assert "pricing file does not exist" in captured.err
+
+
+def test_invalid_prices_file_exits_2(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    f = _write(tmp_path / "s.jsonl", [_assistant("m1", [], {"input_tokens": 1})])
+    prices = _write(tmp_path / "prices.json", ["{not json"])
+    code = main(["sessions", str(f), "--prices", str(prices)])
+    captured = capsys.readouterr()
+    assert code == 2
+    assert "invalid pricing file" in captured.err
+
+
 def test_codex_malformed_lines_are_counted(tmp_path: Path) -> None:
     f = tmp_path / "c.jsonl"
     f.write_text(CODEX_FIXTURE.read_text(encoding="utf-8") + "{broken\n", encoding="utf-8")
