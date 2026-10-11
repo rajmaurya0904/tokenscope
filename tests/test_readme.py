@@ -27,7 +27,7 @@ def test_readme_has_required_headings() -> None:
     content = _get_readme_content()
     headings = _extract_headings(content)
 
-    required = {"Install", "Usage", "Examples", "How it Works", "FAQ"}
+    required = {"Install", "Usage", "How it works", "Limitations", "Development"}
     missing = required - headings
 
     assert not missing, f"README missing required headings: {missing}"
@@ -77,13 +77,21 @@ def test_readme_has_example_output() -> None:
 
 
 def test_readme_has_privacy_note() -> None:
-    """Verify README mentions privacy and local-only operation."""
+    """Verify README states the tool is local-only and uploads nothing."""
     content = _get_readme_content()
 
-    # Check for privacy-related keywords
-    assert "Privacy" in content or "privacy" in content
-    assert "fully local" in content or "local" in content
+    assert "local" in content.lower()
     assert "never" in content.lower() and "upload" in content.lower()
+
+
+def test_readme_limitations_cover_pricing_and_token_estimate() -> None:
+    """Verify Limitations is honest about the pricing table and chars/4 estimate."""
+    content = _get_readme_content()
+    limitations = content.split("## Limitations", 1)[1].split("## ", 1)[0]
+
+    assert "chars/4" in limitations
+    assert "heuristic" in limitations
+    assert "pricing table" in limitations
 
 
 if __name__ == "__main__":
