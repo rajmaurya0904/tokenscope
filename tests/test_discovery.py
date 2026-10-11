@@ -54,7 +54,11 @@ def test_since_filter(tmp_path):
 
 
 def test_default_locations(tmp_path, monkeypatch):
+    # POSIX expands "~" from HOME; Windows expands it from USERPROFILE, so set both.
     monkeypatch.setenv("HOME", str(tmp_path))
+    monkeypatch.setenv("USERPROFILE", str(tmp_path))
+    monkeypatch.delenv("HOMEDRIVE", raising=False)
+    monkeypatch.delenv("HOMEPATH", raising=False)
     f = tmp_path / ".claude" / "projects" / "p" / "s.jsonl"
     g = tmp_path / ".codex" / "sessions" / "2025" / "r.jsonl"
     for p in (f, g):
