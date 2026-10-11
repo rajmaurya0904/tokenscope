@@ -62,6 +62,7 @@ def _load_session(path: Path) -> Session | None:
     try:
         fmt = detect_format(path)
     except UnknownFormatError:
+        _warn(f"skipped {path}: empty or unrecognized transcript format")
         return None
     session = _PARSERS[fmt](path)
     if session.malformed_lines:
@@ -88,6 +89,8 @@ def _load_overrides(prices: str | None) -> dict[str, ModelPricing] | None:
 
 def cmd_analyze(args: argparse.Namespace) -> int:
     sessions = _load_sessions(args.paths, args.since)
+    if not sessions:
+        _warn("no transcript sessions found; the report is empty")
     overrides = _load_overrides(args.prices)
     report = build_report(sessions, oversized_threshold=args.threshold, overrides=overrides)
     if args.min_savings > 0:

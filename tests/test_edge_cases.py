@@ -135,6 +135,28 @@ def test_malformed_lines_warn_on_stderr_and_keep_stdout_json(
     assert json.loads(captured.out)["sessions"] == 1
 
 
+def test_empty_file_yields_empty_report_notice(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    f = tmp_path / "empty.jsonl"
+    f.write_text("", encoding="utf-8")
+    code = main(["analyze", str(f)])
+    captured = capsys.readouterr()
+    assert code == 0
+    assert "Sessions: 0" in captured.out
+    assert "no transcript sessions found" in captured.err
+
+
+def test_unrecognized_file_is_skipped_with_warning(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    f = _write(tmp_path / "notes.jsonl", ['{"hello": "world"}'])
+    code = main(["sessions", str(f)])
+    captured = capsys.readouterr()
+    assert code == 0
+    assert "unrecognized transcript format" in captured.err
+
+
 def test_codex_malformed_lines_are_counted(tmp_path: Path) -> None:
     f = tmp_path / "c.jsonl"
     f.write_text(CODEX_FIXTURE.read_text(encoding="utf-8") + "{broken\n", encoding="utf-8")
