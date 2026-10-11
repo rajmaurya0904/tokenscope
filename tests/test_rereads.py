@@ -1,5 +1,5 @@
-from tcwa.analyzers.rereads import analyze_rereads
-from tcwa.models import Session, ToolCall, ToolResult, Turn
+from tokenscope.analyzers.rereads import analyze_rereads
+from tokenscope.models import Session, ToolCall, ToolResult, Turn
 
 
 def _turn(i: int, name: str, inp: dict, out: str = "x" * 400) -> Turn:

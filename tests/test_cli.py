@@ -1,4 +1,4 @@
-"""Tests for the ``tcwa`` CLI: analyze and sessions subcommands."""
+"""Tests for the ``tokenscope`` CLI: analyze and sessions subcommands."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from tcwa.cli import main
+from tokenscope.cli import main
 
 FIXTURES = Path(__file__).parent / "fixtures"
 CLAUDE_FIXTURE = str(FIXTURES / "claude" / "basic.jsonl")

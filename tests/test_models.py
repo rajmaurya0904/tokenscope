@@ -1,4 +1,4 @@
-from tcwa.models import Session, ToolCall, ToolResult, Turn, Usage
+from tokenscope.models import Session, ToolCall, ToolResult, Turn, Usage
 
 
 def test_usage_total_and_add() -> None:

@@ -5,7 +5,7 @@ from __future__ import annotations
 import sys
 from collections.abc import Sequence
 
-from tcwa.report import Report
+from tokenscope.report import Report
 
 DEFAULT_TOP_N = 10
 

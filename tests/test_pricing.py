@@ -2,8 +2,8 @@ import json
 import tempfile
 from pathlib import Path
 
-from tcwa.models import Usage
-from tcwa.pricing import (
+from tokenscope.models import Usage
+from tokenscope.pricing import (
     TokenCost,
     get_model_pricing,
     load_pricing_overrides,

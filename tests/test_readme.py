@@ -34,7 +34,7 @@ def test_readme_has_required_headings() -> None:
 
 
 def test_readme_mentions_analyze_flags() -> None:
-    """Verify README mentions every flag from tcwa analyze --help."""
+    """Verify README mentions every flag from tokenscope analyze --help."""
     content = _get_readme_content()
 
     # Expected flags based on the CLI definition (from cli.py)

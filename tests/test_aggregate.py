@@ -6,8 +6,8 @@ from datetime import datetime
 
 import pytest
 
-from tcwa.aggregate import aggregate_sessions, session_day, session_project
-from tcwa.models import Session, ToolCall, ToolResult, Turn, Usage
+from tokenscope.aggregate import aggregate_sessions, session_day, session_project
+from tokenscope.models import Session, ToolCall, ToolResult, Turn, Usage
 
 _MODEL = "claude-sonnet-4"  # input 3.0, output 15.0 per million: higher usage -> higher cost
 

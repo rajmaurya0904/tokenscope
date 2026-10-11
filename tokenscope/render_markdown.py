@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from tcwa.report import Report
+from tokenscope.report import Report
 
 
 def _fmt_int(n: int) -> str:

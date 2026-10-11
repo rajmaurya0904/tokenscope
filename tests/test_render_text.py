@@ -1,9 +1,9 @@
 from datetime import datetime
 from pathlib import Path
 
-from tcwa.models import Session, ToolCall, ToolResult, Turn, Usage
-from tcwa.render_text import render_text
-from tcwa.report import build_report
+from tokenscope.models import Session, ToolCall, ToolResult, Turn, Usage
+from tokenscope.render_text import render_text
+from tokenscope.report import build_report
 
 GOLDEN = Path(__file__).parent / "golden" / "report.txt"
 

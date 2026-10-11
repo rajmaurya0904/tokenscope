@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from tcwa.analyzers.cache import CacheMiss
-from tcwa.analyzers.oversized import OversizedResult
-from tcwa.analyzers.rereads import FileReread
-from tcwa.pricing import ModelPricing, get_model_pricing
+from tokenscope.analyzers.cache import CacheMiss
+from tokenscope.analyzers.oversized import OversizedResult
+from tokenscope.analyzers.rereads import FileReread
+from tokenscope.pricing import ModelPricing, get_model_pricing
 
 # Assumed fraction of an oversized result's tokens that a filter/limit could trim.
 _OVERSIZED_SAVINGS_FRACTION = 0.8

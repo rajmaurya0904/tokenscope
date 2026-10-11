@@ -5,8 +5,8 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
-from tcwa.analyzers.tool_spend import Tokenizer, estimate_tokens
-from tcwa.models import Session, ToolCall
+from tokenscope.analyzers.tool_spend import Tokenizer, estimate_tokens
+from tokenscope.models import Session, ToolCall
 
 # Markers the agent harness leaves in a result when it cut the output short.
 _TRUNCATION_MARKERS = (

@@ -2,10 +2,10 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-from tcwa.models import Session, ToolCall, ToolResult, Turn, Usage
-from tcwa.render_json import render_json
-from tcwa.render_markdown import render_markdown
-from tcwa.report import build_report
+from tokenscope.models import Session, ToolCall, ToolResult, Turn, Usage
+from tokenscope.render_json import render_json
+from tokenscope.render_markdown import render_markdown
+from tokenscope.report import build_report
 
 GOLDEN_MARKDOWN = Path(__file__).parent / "golden" / "report.md"
 

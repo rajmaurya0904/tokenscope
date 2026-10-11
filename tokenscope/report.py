@@ -5,13 +5,18 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from datetime import timedelta
 
-from tcwa.analyzers.cache import DEFAULT_TTL, CacheMiss, analyze_cache
-from tcwa.analyzers.oversized import OversizedResult, analyze_oversized
-from tcwa.analyzers.rereads import FileReread, analyze_rereads
-from tcwa.analyzers.tool_spend import Tokenizer, ToolSpend, analyze_tool_spend, estimate_tokens
-from tcwa.models import Session, Usage
-from tcwa.pricing import ModelPricing, price_usage
-from tcwa.suggestions import Suggestion, generate_suggestions
+from tokenscope.analyzers.cache import DEFAULT_TTL, CacheMiss, analyze_cache
+from tokenscope.analyzers.oversized import OversizedResult, analyze_oversized
+from tokenscope.analyzers.rereads import FileReread, analyze_rereads
+from tokenscope.analyzers.tool_spend import (
+    Tokenizer,
+    ToolSpend,
+    analyze_tool_spend,
+    estimate_tokens,
+)
+from tokenscope.models import Session, Usage
+from tokenscope.pricing import ModelPricing, price_usage
+from tokenscope.suggestions import Suggestion, generate_suggestions
 
 
 @dataclass

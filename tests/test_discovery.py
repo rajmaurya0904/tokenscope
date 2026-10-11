@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from tcwa.discovery import (
+from tokenscope.discovery import (
     CLAUDE,
     CODEX,
     UnknownFormatError,

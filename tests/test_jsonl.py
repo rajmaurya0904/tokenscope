@@ -4,7 +4,7 @@ import json
 import tempfile
 from pathlib import Path
 
-from tcwa.jsonl import JSONLReader
+from tokenscope.jsonl import JSONLReader
 
 
 def test_valid_file() -> None:

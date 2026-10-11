@@ -1,5 +1,5 @@
 [project]
-name = "auto-agent-transcript-cost-waste-analyzer"
+name = "tokenscope"
 version = "0.1.0"
 description = "CLI that parses local Claude Code / Codex session JSONL transcripts and reports token spend per tool, repeated file re-reads, oversized tool outputs and cache misses, with concrete suggestions. For heavy agent users who don't know where their tokens go."
 requires-python = ">=3.11"
@@ -18,10 +18,10 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/anthropics/auto-agent-transcript-cost-waste-analyzer"
-Repository = "https://github.com/anthropics/auto-agent-transcript-cost-waste-analyzer"
-Documentation = "https://github.com/anthropics/auto-agent-transcript-cost-waste-analyzer#readme"
-Issues = "https://github.com/anthropics/auto-agent-transcript-cost-waste-analyzer/issues"
+Homepage = "https://github.com/rajmaurya0904/tokenscope"
+Repository = "https://github.com/rajmaurya0904/tokenscope"
+Documentation = "https://github.com/rajmaurya0904/tokenscope#readme"
+Issues = "https://github.com/rajmaurya0904/tokenscope/issues"
 
 [project.optional-dependencies]
 dev = [
@@ -30,7 +30,7 @@ dev = [
 ]
 
 [project.scripts]
-tcwa = "tcwa.cli:main"
+tokenscope = "tokenscope.cli:main"
 
 [build-system]
 requires = ["setuptools>=68"]
@@ -38,7 +38,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["tcwa*"]
+include = ["tokenscope*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

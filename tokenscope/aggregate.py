@@ -5,11 +5,11 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
-from tcwa.analyzers.oversized import OversizedResult, analyze_oversized
-from tcwa.analyzers.rereads import FileReread, analyze_rereads
-from tcwa.analyzers.tool_spend import Tokenizer, estimate_tokens
-from tcwa.models import Session, Usage
-from tcwa.pricing import ModelPricing, price_usage
+from tokenscope.analyzers.oversized import OversizedResult, analyze_oversized
+from tokenscope.analyzers.rereads import FileReread, analyze_rereads
+from tokenscope.analyzers.tool_spend import Tokenizer, estimate_tokens
+from tokenscope.models import Session, Usage
+from tokenscope.pricing import ModelPricing, price_usage
 
 GROUP_PROJECT = "project"
 GROUP_DAY = "day"

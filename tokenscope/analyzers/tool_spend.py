@@ -5,8 +5,8 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from tcwa.models import Session
-from tcwa.pricing import ModelPricing, get_model_pricing
+from tokenscope.models import Session
+from tokenscope.pricing import ModelPricing, get_model_pricing
 
 Tokenizer = Callable[[str], int]
 

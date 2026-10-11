@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from tcwa.analyzers.cache import analyze_cache, cache_hit_ratio
-from tcwa.models import Session, Turn, Usage
+from tokenscope.analyzers.cache import analyze_cache, cache_hit_ratio
+from tokenscope.models import Session, Turn, Usage
 
 BASE = datetime(2024, 1, 1, 12, 0, 0)
 

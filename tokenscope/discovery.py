@@ -6,7 +6,7 @@ from datetime import UTC, date, datetime, time
 from itertools import islice
 from pathlib import Path
 
-from tcwa.jsonl import JSONLReader
+from tokenscope.jsonl import JSONLReader
 
 CLAUDE = "claude"
 CODEX = "codex"

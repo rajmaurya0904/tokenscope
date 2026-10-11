@@ -1,7 +1,7 @@
-from tcwa.analyzers.cache import CacheMiss
-from tcwa.analyzers.oversized import OversizedResult
-from tcwa.analyzers.rereads import FileReread
-from tcwa.suggestions import (
+from tokenscope.analyzers.cache import CacheMiss
+from tokenscope.analyzers.oversized import OversizedResult
+from tokenscope.analyzers.rereads import FileReread
+from tokenscope.suggestions import (
     generate_suggestions,
     suggest_for_cache,
     suggest_for_oversized,

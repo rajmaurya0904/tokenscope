@@ -6,7 +6,7 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
-from tcwa.models import Usage
+from tokenscope.models import Usage
 
 
 @dataclass(frozen=True)

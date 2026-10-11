@@ -26,7 +26,7 @@ Requires Python 3.11+.
 Analyze your local Claude Code and Codex transcripts:
 
 ```bash
-tcwa analyze
+tokenscope analyze
 ```
 
 By default, this discovers and processes all session files in the standard locations (`~/.claude/transcripts`, `~/.codex_sessions`, etc.). Use `--format text` (default), `--format json`, or `--format markdown` to customize output.
@@ -34,17 +34,17 @@ By default, this discovers and processes all session files in the standard locat
 See a list of all discovered sessions:
 
 ```bash
-tcwa sessions
+tokenscope sessions
 ```
 
 ## Usage
 
-### `tcwa analyze` — Full cost and waste report
+### `tokenscope analyze` — Full cost and waste report
 
 Parse transcript files and print a comprehensive report.
 
 ```
-usage: tcwa analyze [-h] [--format {text,json,markdown}] [--top TOP]
+usage: tokenscope analyze [-h] [--format {text,json,markdown}] [--top TOP]
                     [--since SINCE] [--threshold THRESHOLD] [--prices PRICES]
                     [--min-savings MIN_SAVINGS] [--group-by {project,day}]
                     [paths ...]
@@ -72,12 +72,12 @@ options:
                         project or day buckets
 ```
 
-### `tcwa sessions` — List and summarize transcripts
+### `tokenscope sessions` — List and summarize transcripts
 
 Discover and list all session files with their date, size, and cost.
 
 ```
-usage: tcwa sessions [-h] [--format {text,json}] [--since SINCE]
+usage: tokenscope sessions [-h] [--format {text,json}] [--since SINCE]
                      [--prices PRICES]
                      [paths ...]
 
@@ -139,9 +139,9 @@ TURN  TOKENS  GAP (s)  EXTRA COST
 Try it yourself:
 
 ```bash
-tcwa analyze examples/ --format text
-tcwa analyze examples/ --format json
-tcwa analyze examples/ --format markdown
+tokenscope analyze examples/ --format text
+tokenscope analyze examples/ --format json
+tokenscope analyze examples/ --format markdown
 ```
 
 ## How it Works
@@ -263,8 +263,8 @@ Use `--since YYYY-MM-DD` to include only sessions modified on or after that date
 
 For custom filtering, you can:
 
-1. Point `tcwa` at a subset of directories (e.g., `tcwa analyze ./my-sessions/`).
-2. Use `tcwa sessions` to get a JSON list and pipe it through your own tools.
+1. Point `tokenscope` at a subset of directories (e.g., `tokenscope analyze ./my-sessions/`).
+2. Use `tokenscope sessions` to get a JSON list and pipe it through your own tools.
 
 ### How do I interpret "carried tokens"?
 

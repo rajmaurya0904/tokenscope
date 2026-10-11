@@ -7,8 +7,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from tcwa.jsonl import JSONLReader
-from tcwa.models import Session, ToolCall, ToolResult, Turn, Usage
+from tokenscope.jsonl import JSONLReader
+from tokenscope.models import Session, ToolCall, ToolResult, Turn, Usage
 
 _SHELL_TOOLS = {"shell", "local_shell", "shell_command", "container.exec", "exec_command"}
 _READ_TOOLS = {"read", "read_file"}

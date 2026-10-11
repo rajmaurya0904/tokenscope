@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from tcwa.models import Usage
-from tcwa.parse_codex import parse_codex_session
+from tokenscope.models import Usage
+from tokenscope.parse_codex import parse_codex_session
 
 FIXTURE = Path(__file__).parent / "fixtures" / "codex" / "basic.jsonl"
 

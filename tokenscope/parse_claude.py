@@ -6,8 +6,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from tcwa.jsonl import JSONLReader
-from tcwa.models import Session, ToolCall, ToolResult, Turn, Usage
+from tokenscope.jsonl import JSONLReader
+from tokenscope.models import Session, ToolCall, ToolResult, Turn, Usage
 
 
 def _parse_timestamp(value: Any) -> datetime | None:

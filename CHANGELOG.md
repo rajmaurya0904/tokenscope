@@ -23,4 +23,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Initial release
 
-[0.1.0]: https://github.com/anthropics/auto-agent-transcript-cost-waste-analyzer/releases/tag/0.1.0
+[0.1.0]: https://github.com/rajmaurya0904/tokenscope/releases/tag/0.1.0

@@ -1,4 +1,4 @@
-"""Tests for the examples/ directory: ``tcwa analyze examples/`` and its reports."""
+"""Tests for the examples/ directory: ``tokenscope analyze examples/`` and its reports."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from tcwa.cli import main
+from tokenscope.cli import main
 
 EXAMPLES = Path(__file__).parent.parent / "examples"
 

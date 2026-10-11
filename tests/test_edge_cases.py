@@ -7,11 +7,11 @@ from pathlib import Path
 
 import pytest
 
-from tcwa import jsonl as jsonl_module
-from tcwa.cli import main
-from tcwa.parse_claude import parse_claude_session
-from tcwa.parse_codex import parse_codex_session
-from tcwa.report import build_report
+from tokenscope import jsonl as jsonl_module
+from tokenscope.cli import main
+from tokenscope.parse_claude import parse_claude_session
+from tokenscope.parse_codex import parse_codex_session
+from tokenscope.report import build_report
 
 CODEX_FIXTURE = Path(__file__).parent / "fixtures" / "codex" / "basic.jsonl"
 

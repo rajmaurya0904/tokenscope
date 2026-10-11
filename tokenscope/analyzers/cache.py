@@ -5,8 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import timedelta
 
-from tcwa.models import Session, Turn
-from tcwa.pricing import ModelPricing, get_model_pricing
+from tokenscope.models import Session, Turn
+from tokenscope.pricing import ModelPricing, get_model_pricing
 
 DEFAULT_TTL = timedelta(minutes=5)
 

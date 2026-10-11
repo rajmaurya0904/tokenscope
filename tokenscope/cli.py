@@ -1,4 +1,4 @@
-"""The ``tcwa`` command-line interface: ``analyze`` and ``sessions`` subcommands."""
+"""The ``tokenscope`` command-line interface: ``analyze`` and ``sessions`` subcommands."""
 
 from __future__ import annotations
 
@@ -9,22 +9,22 @@ from collections.abc import Sequence
 from datetime import date
 from pathlib import Path
 
-from tcwa import __version__
-from tcwa.aggregate import (
+from tokenscope import __version__
+from tokenscope.aggregate import (
     GROUP_CHOICES,
     aggregate_sessions,
     aggregate_to_dict,
     render_aggregate_text,
 )
-from tcwa.discovery import UnknownFormatError, detect_format, discover_sessions
-from tcwa.models import Session
-from tcwa.parse_claude import parse_claude_session
-from tcwa.parse_codex import parse_codex_session
-from tcwa.pricing import ModelPricing, load_pricing_overrides, price_usage
-from tcwa.render_json import render_json
-from tcwa.render_markdown import render_markdown
-from tcwa.render_text import DEFAULT_TOP_N, render_text
-from tcwa.report import build_report
+from tokenscope.discovery import UnknownFormatError, detect_format, discover_sessions
+from tokenscope.models import Session
+from tokenscope.parse_claude import parse_claude_session
+from tokenscope.parse_codex import parse_codex_session
+from tokenscope.pricing import ModelPricing, load_pricing_overrides, price_usage
+from tokenscope.render_json import render_json
+from tokenscope.render_markdown import render_markdown
+from tokenscope.render_text import DEFAULT_TOP_N, render_text
+from tokenscope.report import build_report
 
 _PARSERS = {"claude": parse_claude_session, "codex": parse_codex_session}
 
@@ -74,7 +74,7 @@ def _load_session(path: Path) -> Session | None:
 
 
 def _warn(message: str) -> None:
-    print(f"tcwa: warning: {message}", file=sys.stderr)
+    print(f"tokenscope: warning: {message}", file=sys.stderr)
 
 
 def _load_sessions(paths: Sequence[str], since: date | None) -> list[Session]:
@@ -189,10 +189,10 @@ def cmd_sessions(args: argparse.Namespace) -> int:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="tcwa",
+        prog="tokenscope",
         description="Analyze agent session transcripts for token cost and waste.",
     )
-    parser.add_argument("--version", action="version", version=f"tcwa {__version__}")
+    parser.add_argument("--version", action="version", version=f"tokenscope {__version__}")
     subparsers = parser.add_subparsers(dest="command")
 
     analyze_p = subparsers.add_parser(
@@ -274,7 +274,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         return args.func(args)
     except _BadInputError as exc:
-        print(f"tcwa: error: {exc}", file=sys.stderr)
+        print(f"tokenscope: error: {exc}", file=sys.stderr)
         return 2
 
 

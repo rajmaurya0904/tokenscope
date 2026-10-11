@@ -1,7 +1,7 @@
 import pytest
 
-from tcwa.analyzers.tool_spend import analyze_tool_spend
-from tcwa.models import Session, ToolCall, ToolResult, Turn
+from tokenscope.analyzers.tool_spend import analyze_tool_spend
+from tokenscope.models import Session, ToolCall, ToolResult, Turn
 
 
 def _session() -> Session:

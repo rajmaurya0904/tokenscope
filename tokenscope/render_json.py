@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from dataclasses import asdict
 
-from tcwa.report import Report
+from tokenscope.report import Report
 
 SCHEMA_VERSION = "1.0"
 

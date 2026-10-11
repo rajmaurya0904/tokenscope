@@ -8,8 +8,8 @@ import shlex
 from dataclasses import dataclass
 from typing import Any
 
-from tcwa.analyzers.tool_spend import Tokenizer, estimate_tokens
-from tcwa.models import Session, ToolCall
+from tokenscope.analyzers.tool_spend import Tokenizer, estimate_tokens
+from tokenscope.models import Session, ToolCall
 
 _EDIT_TOOLS = {"Edit", "Write", "MultiEdit", "NotebookEdit"}
 _READ_CMDS = {"cat", "head", "tail", "sed", "nl", "less", "more"}
