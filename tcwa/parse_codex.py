@@ -106,7 +106,8 @@ def parse_codex_session(path: str | Path) -> Session:
         session.turns.append(turn)
         return turn
 
-    for entry in JSONLReader(path).read():
+    reader = JSONLReader(path)
+    for entry in reader.read():
         if not isinstance(entry, dict):
             continue
         payload = entry.get("payload")
@@ -157,4 +158,5 @@ def parse_codex_session(path: str | Path) -> Session:
             current.usage = current.usage + _sub(total, previous)
             previous = total
             current = None
+    session.malformed_lines = len(reader.warnings)
     return session

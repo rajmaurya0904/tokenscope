@@ -6,7 +6,10 @@ import json
 from pathlib import Path
 
 from tcwa.parse_claude import parse_claude_session
+from tcwa.parse_codex import parse_codex_session
 from tcwa.report import build_report
+
+CODEX_FIXTURE = Path(__file__).parent / "fixtures" / "codex" / "basic.jsonl"
 
 
 def _write(path: Path, lines: list[str]) -> Path:
@@ -101,6 +104,14 @@ def test_malformed_lines_are_counted(tmp_path: Path) -> None:
     session = parse_claude_session(f)
     assert session.malformed_lines == 2
     assert len(session.turns) == 1
+
+
+def test_codex_malformed_lines_are_counted(tmp_path: Path) -> None:
+    f = tmp_path / "c.jsonl"
+    f.write_text(CODEX_FIXTURE.read_text(encoding="utf-8") + "{broken\n", encoding="utf-8")
+    session = parse_codex_session(f)
+    assert session.malformed_lines == 1
+    assert session.turns
 
 
 def test_truncated_final_line_counts_as_malformed(tmp_path: Path) -> None:
