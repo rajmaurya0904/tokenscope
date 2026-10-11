@@ -163,3 +163,16 @@ def test_unknown_command_when_missing() -> None:
     )
     [r] = analyze_oversized(s)
     assert r.command == "unknown"
+
+
+def test_harness_truncation_marker_sets_is_truncated() -> None:
+    body = "x" * 20001 + "\n[output truncated: 500 lines omitted]"
+    s = _session(_turn(0, "Bash", {"command": "npm test"}, body))
+    [r] = analyze_oversized(s)
+    assert r.is_truncated is True
+
+
+def test_untruncated_output_not_marked_truncated() -> None:
+    s = _session(_turn(0, "Bash", {"command": "npm test"}, "x" * 20001))
+    [r] = analyze_oversized(s)
+    assert r.is_truncated is False
