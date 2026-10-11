@@ -121,6 +121,20 @@ def test_nonexistent_path_exits_2_with_message(
     assert str(missing) in captured.err
 
 
+def test_malformed_lines_warn_on_stderr_and_keep_stdout_json(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    f = _write(
+        tmp_path / "s.jsonl",
+        [_assistant("m1", [], {"input_tokens": 1}), "{bad", "{worse"],
+    )
+    code = main(["analyze", str(f), "--format", "json"])
+    captured = capsys.readouterr()
+    assert code == 0
+    assert "skipped 2 malformed line(s)" in captured.err
+    assert json.loads(captured.out)["sessions"] == 1
+
+
 def test_codex_malformed_lines_are_counted(tmp_path: Path) -> None:
     f = tmp_path / "c.jsonl"
     f.write_text(CODEX_FIXTURE.read_text(encoding="utf-8") + "{broken\n", encoding="utf-8")

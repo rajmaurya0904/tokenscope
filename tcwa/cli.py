@@ -63,7 +63,14 @@ def _load_session(path: Path) -> Session | None:
         fmt = detect_format(path)
     except UnknownFormatError:
         return None
-    return _PARSERS[fmt](path)
+    session = _PARSERS[fmt](path)
+    if session.malformed_lines:
+        _warn(f"skipped {session.malformed_lines} malformed line(s) in {path}")
+    return session
+
+
+def _warn(message: str) -> None:
+    print(f"tcwa: warning: {message}", file=sys.stderr)
 
 
 def _load_sessions(paths: Sequence[str], since: date | None) -> list[Session]:
