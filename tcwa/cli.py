@@ -61,10 +61,13 @@ def _resolve_paths(paths: Sequence[str], since: date | None) -> list[Path]:
 def _load_session(path: Path) -> Session | None:
     try:
         fmt = detect_format(path)
+        session = _PARSERS[fmt](path)
     except UnknownFormatError:
         _warn(f"skipped {path}: empty or unrecognized transcript format")
         return None
-    session = _PARSERS[fmt](path)
+    except OSError as exc:
+        _warn(f"skipped {path}: cannot read file ({exc.strerror or exc})")
+        return None
     if session.malformed_lines:
         _warn(f"skipped {session.malformed_lines} malformed line(s) in {path}")
     return session

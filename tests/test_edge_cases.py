@@ -7,6 +7,7 @@ from pathlib import Path
 
 import pytest
 
+from tcwa import jsonl as jsonl_module
 from tcwa.cli import main
 from tcwa.parse_claude import parse_claude_session
 from tcwa.parse_codex import parse_codex_session
@@ -155,6 +156,28 @@ def test_unrecognized_file_is_skipped_with_warning(
     captured = capsys.readouterr()
     assert code == 0
     assert "unrecognized transcript format" in captured.err
+
+
+def test_unreadable_file_is_skipped_with_warning(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    real_open = open
+
+    def fake_open(path: object, *args: object, **kwargs: object):  # type: ignore[no-untyped-def]
+        if Path(str(path)).name == "locked.jsonl":
+            raise PermissionError(13, "Permission denied")
+        return real_open(path, *args, **kwargs)
+
+    monkeypatch.setattr(jsonl_module, "open", fake_open, raising=False)
+    _write(tmp_path / "locked.jsonl", [_assistant("m1", [], {"input_tokens": 1})])
+    _write(tmp_path / "ok.jsonl", [_assistant("m2", [], {"input_tokens": 1})])
+
+    code = main(["analyze", str(tmp_path), "--format", "json"])
+    captured = capsys.readouterr()
+    assert code == 0
+    assert "cannot read file" in captured.err
+    assert "locked.jsonl" in captured.err
+    assert json.loads(captured.out)["sessions"] == 1
 
 
 def test_codex_malformed_lines_are_counted(tmp_path: Path) -> None:
