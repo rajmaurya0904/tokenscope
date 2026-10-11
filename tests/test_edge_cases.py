@@ -5,6 +5,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
+from tcwa.cli import main
 from tcwa.parse_claude import parse_claude_session
 from tcwa.parse_codex import parse_codex_session
 from tcwa.report import build_report
@@ -104,6 +107,18 @@ def test_malformed_lines_are_counted(tmp_path: Path) -> None:
     session = parse_claude_session(f)
     assert session.malformed_lines == 2
     assert len(session.turns) == 1
+
+
+@pytest.mark.parametrize("command", ["analyze", "sessions"])
+def test_nonexistent_path_exits_2_with_message(
+    command: str, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    missing = tmp_path / "nope.jsonl"
+    code = main([command, str(missing)])
+    captured = capsys.readouterr()
+    assert code == 2
+    assert "does not exist" in captured.err
+    assert str(missing) in captured.err
 
 
 def test_codex_malformed_lines_are_counted(tmp_path: Path) -> None:

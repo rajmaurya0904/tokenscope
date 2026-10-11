@@ -29,6 +29,10 @@ from tcwa.report import build_report
 _PARSERS = {"claude": parse_claude_session, "codex": parse_codex_session}
 
 
+class _BadInputError(Exception):
+    """A user-supplied argument that cannot be used; reported with exit code 2."""
+
+
 def _parse_date(value: str) -> date:
     try:
         return date.fromisoformat(value)
@@ -45,6 +49,8 @@ def _resolve_paths(paths: Sequence[str], since: date | None) -> list[Path]:
     seen: set[Path] = set()
     found: list[Path] = []
     for raw in paths:
+        if not Path(raw).expanduser().exists():
+            raise _BadInputError(f"path does not exist: {raw}")
         for f in discover_sessions(raw, since=since):
             if f not in seen:
                 seen.add(f)
@@ -245,7 +251,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     if not getattr(args, "command", None):
         parser.print_help()
         return 1
-    return args.func(args)
+    try:
+        return args.func(args)
+    except _BadInputError as exc:
+        print(f"tcwa: error: {exc}", file=sys.stderr)
+        return 2
 
 
 if __name__ == "__main__":
